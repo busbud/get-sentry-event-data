@@ -1,0 +1,33 @@
+{
+  "name": "get-sentry-event-data",
+  "version": "1.0.0",
+  "description": "CLI to retrieve event data from Sentry",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "bin": {
+    "get-sentry-event-data": "index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/busbud/get-sentry-event-data.git"
+  },
+  "keywords": [
+    "sentry"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/busbud/get-sentry-event-data/issues"
+  },
+  "homepage": "https://github.com/busbud/get-sentry-event-data#readme",
+  "engines": {
+    "node": "4.4.3"
+  },
+  "dependencies": {
+    "ramda": "0.21.0",
+    "request-promise": "3.0.0",
+    "urijs": "1.16.1",
+    "yargs": "4.7.1"
+  }
+}
