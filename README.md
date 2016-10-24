@@ -17,6 +17,34 @@ get-sentry-event-data 108098418 \
  | sort -r
 ```
 
+Also included are the `tags`, but converted into map instead of the original 
+`[{key: "key1", value: "value1"]` format, preferring `{key1: "value1"}`.
+
+`dateCreated` and `dateReceived` are present to provide timing information.
+
+In summary, the following data is emitted by the tool
+
+```js
+[{
+  "context": {},        // original Sentry format
+  "tags": {             // reformatted Sentry tag list
+    "key1": "value1",
+    "key2": "value2",
+  },
+  "dateCreated": "YYYY-MM-DDTHH:mm:ssZ",
+  "dateReceived": "YYYY-MM-DDTHH:mm:ssZ"
+},
+{
+  "context": {},
+  "tags": {
+    "key1": "value1",
+    "key2": "value2",
+  },
+  "dateCreated": "YYYY-MM-DDTHH:mm:ssZ",
+  "dateReceived": "YYYY-MM-DDTHH:mm:ssZ"
+}]
+```
+
 ## Setup
 You'll need a Sentry token to retrieve data from the Sentry API. To create one, follow these steps:
 

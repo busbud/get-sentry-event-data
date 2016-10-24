@@ -39,9 +39,31 @@ function listIssueEvents(issue_id) {
   return fetch("GET", path);
 }
 
+function format(event) {
+  const tags = R.reduce((acc, pair) => {
+    if (acc.hasOwnProperty(pair.key)) {
+      if (!R.isArrayLike(acc[pair.key])) {
+        acc[pair.key] = [acc[pair.key]];  // Convert to array so we can append other values
+      }
+
+      acc[pair.key].push(pair.value);
+
+    } else {
+      acc[pair.key] = pair.value;
+    }
+
+    return acc;
+  }, {}, R.prop("tags", event));
+
+  return R.merge(
+    R.pick(["context", "dateCreated", "dateReceived"], event),
+    {tags: tags}
+  );
+}
+
 listIssueEvents(event_id)
   .then(events => {
-    const extracted = R.map(R.prop("context"), events);
+    const extracted = R.map(format, events);
 
     console.log(JSON.stringify(extracted));
   })
