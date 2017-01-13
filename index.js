@@ -4,12 +4,13 @@ const request = require("request-promise");
 const URI = require("urijs");
 
 const SENTRY_API_TOKEN = process.env.SENTRY_API_TOKEN;
-const BASE_URI = new URI("https://app.getsentry.com/api/0/");
+const BASE_URI = new URI("https://sentry.io/api/0/");
 
 const doc =
 `
 Usage:
   $0 <event_id>
+  $0 --pages | number of pages to fetch default to 1
   $0 -h | --help
 `.trimRight();
 
@@ -18,6 +19,8 @@ const argv = require("yargs")
   .demand(1)
   .help("help")
   .argv;
+
+const pages = parseInt(argv.pages, 10) || 1;
 
 const event_id = argv._[0];
 
@@ -28,15 +31,33 @@ function fetch(method, path, options) {
     headers: {
       Authorization: `Bearer ${SENTRY_API_TOKEN}`
     },
-    json: true
+    json: true,
+    resolveWithFullResponse: true
   }, options || {});
 
   return request(options);
 }
 
-function listIssueEvents(issue_id) {
+function listIssueEvents(issue_id, max_page = 0, cursor = null) {
   const path = `/issues/${issue_id}/events/`;
-  return fetch("GET", path);
+
+  const options = {};
+  if (cursor) options.qs = {cursor};
+
+  return fetch("GET", path, options)
+    .then(res => {
+      const events = res.body;
+      const defaultToEmptyString = R.defaultTo('');
+      const findNextLink = R.pipe(defaultToEmptyString, R.split(','), R.filter(R.pipe(R.match(/rel="next"/), R.isEmpty, R.not)), R.head);
+      const getCursor = R.pipe(defaultToEmptyString, R.match(/cursor="([a-zA-Z0-9:]*)"/), R.pathOr(null, ['1']));
+      const next_link_cursor = R.pipe(findNextLink, getCursor)(res.headers.link);
+      if (next_link_cursor && max_page !== 0) {
+        return listIssueEvents(issue_id, --max_page, next_link_cursor)
+          .then(R.concat(events));
+      }
+
+      return events;
+    });
 }
 
 function format(event) {
@@ -61,7 +82,7 @@ function format(event) {
   );
 }
 
-listIssueEvents(event_id)
+listIssueEvents(event_id, pages - 1)
   .then(events => {
     const extracted = R.map(format, events);
 
