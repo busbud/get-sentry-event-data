@@ -4,6 +4,12 @@ const request = require("request-promise");
 const URI = require("urijs");
 
 const SENTRY_API_TOKEN = process.env.SENTRY_API_TOKEN;
+if (!SENTRY_API_TOKEN) {
+  console.log(`Please specify a SENTRY_API_TOKEN environment variable
+Visit https://github.com/busbud/get-sentry-event-data#setup for more information`);
+  process.exit(1);
+}
+
 const BASE_URI = new URI("https://sentry.io/api/0/");
 
 const doc =
