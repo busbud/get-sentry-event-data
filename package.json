@@ -1,6 +1,6 @@
 {
   "name": "get-sentry-event-data",
-  "version": "2.2.0",
+  "version": "2.2.1",
   "description": "CLI to retrieve event data from Sentry",
   "main": "index.js",
   "scripts": {
@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/busbud/get-sentry-event-data#readme",
   "engines": {
-    "node": "4.4.3"
+    "node": ">=4.4.3"
   },
   "dependencies": {
     "ramda": "0.21.0",
