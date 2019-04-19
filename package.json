@@ -4,7 +4,11 @@
   "description": "CLI to retrieve event data from Sentry",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "tsc-watch --onSuccess \"node ./index.js\"",
+    "build": "tsc",
+    "lint": "busbud-tslint",
+    "prepublish": "npm run build",
+    "test": "npm run lint"
   },
   "bin": {
     "get-sentry-event-data": "index.js"
@@ -22,12 +26,23 @@
   },
   "homepage": "https://github.com/busbud/get-sentry-event-data#readme",
   "engines": {
-    "node": ">=4.4.3"
+    "node": ">=10.15.0"
   },
   "dependencies": {
-    "ramda": "0.21.0",
+    "bluebird": "3.5.4",
+    "commander": "2.20.0",
+    "request": "2.88.0",
     "request-promise": "3.0.0",
-    "urijs": "1.16.1",
-    "yargs": "4.7.1"
+    "tsc-watch": "2.1.2",
+    "urijs": "1.16.1"
+  },
+  "devDependencies": {
+    "@types/bluebird": "3.5.26",
+    "@types/commander": "2.12.2",
+    "@types/request-promise": "4.1.42",
+    "@types/urijs": "1.15.38",
+    "busbud-tslint": "0.0.13",
+    "ts-node": "8.1.0",
+    "typescript": "3.4.3"
   }
 }
