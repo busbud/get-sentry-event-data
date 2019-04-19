@@ -1,10 +1,10 @@
 # get-sentry-event-data
+
 CLI tool for retrieving event data from Sentry.
 
 ## Usage
-`get-sentry-event-data` iterates over a Sentry issue's events and emits each event's `context` as JSON
-so you can use your tool chain (like [`jq`](https://stedolan.github.io/jq/)) to create custom reports to accelerate your investigation
-of issues.
+
+`get-sentry-event-data` iterates over a Sentry issue's events and emits each event's `context` as JSON so you can use your tool chain (like [`jq`](https://stedolan.github.io/jq/)) to create custom reports to accelerate your investigation of issues.
 
 ```sh
 # install
@@ -17,35 +17,38 @@ get-sentry-event-data 108098418 \
  | sort -r
 ```
 
-Also included are the `tags`, but converted into map instead of the original 
-`[{key: "key1", value: "value1"]` format, preferring `{key1: "value1"}`.
+Also included are the `tags`, but converted into map instead of the original `[{key: "key1", value: "value1"]` format, preferring `{key1: "value1"}`.
 
 `dateCreated` and `dateReceived` are present to provide timing information.
 
 In summary, the following data is emitted by the tool
 
 ```js
-[{
-  "context": {},        // original Sentry format
-  "tags": {             // reformatted Sentry tag list
-    "key1": "value1",
-    "key2": "value2",
+[
+  {
+    context: {}, // original Sentry format
+    tags: {
+      // reformatted Sentry tag list
+      key1: 'value1',
+      key2: 'value2'
+    },
+    dateCreated: 'YYYY-MM-DDTHH:mm:ssZ',
+    dateReceived: 'YYYY-MM-DDTHH:mm:ssZ'
   },
-  "dateCreated": "YYYY-MM-DDTHH:mm:ssZ",
-  "dateReceived": "YYYY-MM-DDTHH:mm:ssZ"
-},
-{
-  "context": {},
-  "tags": {
-    "key1": "value1",
-    "key2": "value2",
-  },
-  "dateCreated": "YYYY-MM-DDTHH:mm:ssZ",
-  "dateReceived": "YYYY-MM-DDTHH:mm:ssZ"
-}]
+  {
+    context: {},
+    tags: {
+      key1: 'value1',
+      key2: 'value2'
+    },
+    dateCreated: 'YYYY-MM-DDTHH:mm:ssZ',
+    dateReceived: 'YYYY-MM-DDTHH:mm:ssZ'
+  }
+];
 ```
 
 ## Setup
+
 You'll need a Sentry token to retrieve data from the Sentry API. To create one, follow these steps:
 
 - Visit https://app.getsentry.com/api/new-token/
@@ -53,3 +56,13 @@ You'll need a Sentry token to retrieve data from the Sentry API. To create one, 
 - Create an environment variable `SENTRY_API_TOKEN` setting it to the newly created token
 
 You're now ready to use `get-sentry-event-data`!
+
+## Options
+
+- `-p, --pages [pages]`: number of pages to fetch. defaults to 1
+
+- `-o, --organisation [organisation]`: organisation. required for extended events
+
+- `-n, --project-name [project-name]`: project name. required for extended events
+
+- `-x, --extended-event`: enable extended event
