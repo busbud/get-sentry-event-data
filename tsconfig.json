@@ -1,0 +1,17 @@
+{
+  "compilerOptions": {
+    "target": "es2018",
+    "lib": ["es2018", "dom"],
+    "module": "commonjs",
+    "outDir": ".",
+    "rootDir": ".",
+    "allowJs": true,
+    "checkJs": true,
+    "removeComments": true,
+    "importHelpers": true,
+    "strict": true,
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true
+  },
+  "exclude": ["node_modules", "types.ts"]
+}
