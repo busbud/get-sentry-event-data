@@ -64,7 +64,7 @@ async function listIssueEvents(issue_id: number, max_page = 0, cursor: string | 
 
 async function getExtendedEvent(
   organisation: string,
-  project_name: number,
+  project_name: string,
   event_id: string
 ): Promise<ExtendedEvent[]> {
   const path = `/projects/${organisation}/${project_name}/events/${event_id}/`;
