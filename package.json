@@ -7,8 +7,9 @@
     "watch": "tsc-watch --onSuccess \"node ./index.js\"",
     "build": "tsc",
     "lint": "busbud-tslint",
-    "prepublish": "npm run build",
-    "test": "npm run lint"
+    "prepublish": "npm run snyk-protect; npm run build",
+    "test": "npm run lint",
+    "snyk-protect": "snyk protect"
   },
   "bin": {
     "get-sentry-event-data": "index.js"
@@ -34,7 +35,8 @@
     "request": "2.88.0",
     "request-promise": "3.0.0",
     "tsc-watch": "2.1.2",
-    "urijs": "1.16.1"
+    "urijs": "1.16.1",
+    "snyk": "^1.192.4"
   },
   "devDependencies": {
     "@types/bluebird": "3.5.26",
@@ -44,5 +46,6 @@
     "busbud-tslint": "0.0.13",
     "ts-node": "8.1.0",
     "typescript": "3.4.3"
-  }
+  },
+  "snyk": true
 }
