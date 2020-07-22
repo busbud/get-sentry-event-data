@@ -7,7 +7,7 @@
     "watch": "tsc-watch --onSuccess \"node ./index.js\"",
     "build": "tsc",
     "lint": "busbud-tslint",
-    "prepublish": "npm run snyk-protect; npm run build",
+    "prepublish": "yarn run snyk-protect; npm run build",
     "test": "npm run lint",
     "snyk-protect": "snyk protect"
   },
@@ -36,7 +36,7 @@
     "request-promise": "3.0.0",
     "tsc-watch": "2.1.2",
     "urijs": "1.16.1",
-    "snyk": "^1.192.4"
+    "snyk": "^1.319.0"
   },
   "devDependencies": {
     "@types/bluebird": "3.5.26",
