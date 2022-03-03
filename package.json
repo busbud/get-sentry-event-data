@@ -35,7 +35,7 @@
     "request": "2.88.0",
     "request-promise": "3.0.0",
     "tsc-watch": "2.1.2",
-    "urijs": "1.16.1",
+    "urijs": "1.19.9",
     "snyk": "^1.192.4"
   },
   "devDependencies": {
